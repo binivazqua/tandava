@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TĀṆḌAVA — el fin como danza</title>
+<meta name="description" content="Un collage digital sobre el apocalipsis leído desde el hinduismo: ni paraíso ni infierno, una danza.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Space+Mono:wght@400;700&family=Noto+Serif+Devanagari:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     TĀṆḌAVA — paleta sin color: solo carbón, hueso y ceniza.
+     el único "acento" es la inversión total en el acto del flash.
+     ============================================================ */
+  :root {
+    --carbon: #060606;
+    --hueso: #e9e5dc;
+    --ceniza: #8a8782;
+    --humo: #2e2e2c;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --mono: 'Space Mono', monospace;
+    --deva: 'Noto Serif Devanagari', serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--carbon);
+    color: var(--hueso);
+    font-family: var(--serif);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+    transition: opacity 2.4s ease;
+  }
+
+  ::selection { background: var(--hueso); color: var(--carbon); }
+
+  /* ---- grano de película sobre todo (el archivo, la memoria) ---- */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.10;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------------- tipografía base ---------------- */
+  .mono {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ceniza);
+  }
+
+  h1, h2 { font-weight: 300; letter-spacing: 0.04em; }
+
+  section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 14vh 8vw;
+    position: relative;
+  }
+
+  .acto-num {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--ceniza);
+    margin-bottom: 2.5rem;
+  }
+
+  p.cuerpo {
+    max-width: 34rem;
+    font-size: 1.25rem;
+    margin-bottom: 1.4rem;
+  }
+
+  em { font-style: italic; }
+
+  /* ---- traducción al inglés: misma voz, un tono más abajo ---- */
+  .en { color: var(--ceniza); }
+  p.cuerpo.en {
+    font-size: 1.06rem;
+    margin-top: -0.9rem;
+    margin-bottom: 1.8rem;
+  }
+  h2 .en {
+    display: block;
+    font-size: 0.62em;
+    margin-top: 0.45rem;
+  }
+  blockquote .en {
+    display: block;
+    font-size: 0.82em;
+    margin-top: 0.9rem;
+  }
+  .gita-trad-en {
+    max-width: 32rem;
+    margin-top: 0.8rem;
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--ceniza);
+  }
+  .flash .en, .flash p.cuerpo.en { color: #76736c; }
+
+  /* ---------------- HERO: el anillo ---------------- */
+  .hero {
+    align-items: center;
+    text-align: center;
+    padding: 0 6vw;
+  }
+
+  #anillo {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+  }
+
+  .hero-contenido { position: relative; z-index: 1; }
+
+  .om {
+    font-family: var(--deva);
+    font-size: 1.6rem;
+    color: var(--ceniza);
+    display: block;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.2rem, 11vw, 8.5rem);
+    letter-spacing: 0.12em;
+    line-height: 1;
+  }
+
+  .hero .definicion {
+    margin-top: 2rem;
+    font-size: 0.72rem;
+  }
+
+  .hero .tesis {
+    margin-top: 1.2rem;
+    font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+    font-style: italic;
+    color: var(--hueso);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 4vh; left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    animation: latido 3s ease-in-out infinite;
+  }
+  @keyframes latido { 0%,100% { opacity: 0.25; } 50% { opacity: 0.8; } }
+
+  /* ---------------- collage de imágenes ---------------- */
+  .acto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6vw;
+    align-items: center;
+    max-width: 72rem;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  figure { position: relative; }
+
+  figure img {
+    width: 100%;
+    display: block;
+    filter: grayscale(1) contrast(1.25);
+  }
+
+  /* la única excepción al blanco y negro de toda la pieza: la llama */
+  figure.a-color img { filter: contrast(1.08) saturate(1.1); }
+  figure.a-color { max-width: 17rem; margin: 3.5rem auto 0; }
+
+  /* marco de "espécimen de archivo": esquinas marcadas, no caja completa */
+  figure::before, figure::after {
+    content: '';
+    position: absolute;
+    width: 18px; height: 18px;
+    border: 1px solid var(--ceniza);
+  }
+  figure::before { top: -8px; left: -8px; border-right: none; border-bottom: none; }
+  figure::after  { bottom: -8px; right: -8px; border-left: none; border-top: none; }
+
+  figcaption {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ceniza);
+    margin-top: 0.9rem;
+    line-height: 1.8;
+  }
+
+  h2 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    margin-bottom: 1.6rem;
+    font-style: italic;
+  }
+
+  /* ---------------- ACTO II: el flash (inversión) ---------------- */
+  .flash {
+    background: var(--hueso);
+    color: var(--carbon);
+    text-align: center;
+    align-items: center;
+  }
+  .flash .acto-num, .flash .mono { color: #5a5750; }
+  .flash ::selection { background: var(--carbon); color: var(--hueso); }
+
+  .hora {
+    font-family: var(--mono);
+    font-size: clamp(2.4rem, 8vw, 5rem);
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    margin: 1rem 0 0.4rem;
+  }
+
+  .flash figure { max-width: 30rem; margin: 3rem auto 0; }
+  .flash figure img { filter: grayscale(1) contrast(1.35) invert(1); }
+  .flash figure::before, .flash figure::after { border-color: #5a5750; }
+
+  blockquote {
+    max-width: 36rem;
+    margin: 2.6rem auto 0;
+    font-size: clamp(1.3rem, 3vw, 1.9rem);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  blockquote .origen {
+    display: block;
+    margin-top: 1.2rem;
+    font-style: normal;
+  }
+
+  /* ---------------- ACTO III: atman ---------------- */
+  .atman { text-align: center; align-items: center; }
+
+  .gita-deva {
+    font-family: var(--deva);
+    font-size: clamp(1.4rem, 4vw, 2.4rem);
+    font-weight: 300;
+    line-height: 2;
+    max-width: 40rem;
+  }
+
+  .gita-trad {
+    max-width: 32rem;
+    margin-top: 2rem;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--hueso);
+  }
+
+  .verso-ref { margin-top: 1.6rem; }
+
+  /* ---------------- ACTO IV: entropía ---------------- */
+  .entropia .acto-grid { align-items: start; }
+  .spotify-marco { margin-top: 1rem; }
+  .spotify-marco iframe {
+    width: 100%;
+    height: 152px;
+    border: 0;
+    border-radius: 12px;
+    filter: grayscale(1) contrast(1.05);
+  }
+
+  /* ---------------- PRALAYA ---------------- */
+  .pralaya {
+    text-align: center;
+    align-items: center;
+    min-height: 90vh;
+  }
+
+  #disolver {
+    margin-top: 3rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    background: none;
+    color: var(--hueso);
+    border: 1px solid var(--ceniza);
+    padding: 1.1rem 2.4rem;
+    cursor: pointer;
+    transition: background 0.6s ease, color 0.6s ease;
+  }
+  #disolver:hover, #disolver:focus-visible {
+    background: var(--hueso);
+    color: var(--carbon);
+    outline: none;
+  }
+  #disolver:focus-visible { outline: 2px dashed var(--ceniza); outline-offset: 4px; }
+
+  /* velo de disolución: ruido blanco que lo cubre todo y se retira */
+  #velo {
+    position: fixed; inset: 0;
+    background: var(--hueso);
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 2.2s ease;
+  }
+  #velo.activo { opacity: 1; pointer-events: all; }
+
+  footer {
+    padding: 4rem 8vw 3rem;
+    border-top: 1px solid var(--humo);
+  }
+  footer .mono { line-height: 2.2; text-transform: none; letter-spacing: 0.08em; }
+  footer a { color: var(--ceniza); }
+
+  /* ---------------- responsive + accesibilidad ---------------- */
+  @media (max-width: 720px) {
+    .acto-grid { grid-template-columns: 1fr; gap: 3rem; }
+    section { padding: 12vh 7vw; }
+    p.cuerpo { font-size: 1.1rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .scroll-hint { animation: none; }
+    body, #velo { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HERO · el anillo de fuego (prabhamandala) hecho de partículas
+     que nacen y se aniquilan — como en un acelerador, como en la
+     danza. el sitio entero es una rueda: al final, se disuelve y
+     vuelve aquí.
+     ============================================================ -->
+<section class="hero">
+  <canvas id="anillo" aria-hidden="true"></canvas>
+  <div class="hero-contenido">
+    <span class="om" lang="sa">ॐ</span>
+    <h1 lang="sa">TĀṆḌAVA</h1>
+    <p class="definicion mono">apocalipsis · ἀποκάλυψις · «quitar el velo»</p>
+    <p class="definicion mono en" lang="en">apocalypse · «to lift the veil»</p>
+    <p class="tesis">ni paraíso ni infierno: una danza que no ha dejado de bailarse.</p>
+    <p class="tesis en" lang="en" style="margin-top: 0.5rem; font-size: clamp(0.95rem, 2vw, 1.2rem);">neither paradise nor hell: a dance that has never stopped being danced.</p>
+  </div>
+  <span class="scroll-hint mono">desciende ↓</span>
+</section>
+
+<!-- ============================================================
+     ACTO I · la danza
+     ============================================================ -->
+<section>
+  <div class="acto-grid">
+    <div>
+      <p class="acto-num">acto i — la danza · act i — the dance</p>
+      <h2>el universo no termina. respira.<span class="en" lang="en">the universe does not end. it breathes.</span></h2>
+      <p class="cuerpo">Shiva Nataraja baila dentro de un anillo de fuego: en una mano sostiene el tambor que crea el mundo, en la otra la llama que lo disuelve. Este balance perfecto es el equilibrio que nos hace caóticamente singulares.</p>
+      <p class="cuerpo en" lang="en">Shiva Nataraja dances inside a ring of fire: in one hand he holds the drum that creates the world; in the other, the flame that dissolves it. This perfect balance is the equilibrium that makes us chaotically singular.</p>
+      <p class="cuerpo">Por eso hay una estatua suya frente al CERN: los físicos reconocieron en «su danza» lo que ven en los aceleradores de partículas… puntos ínfimos que aparecen y se aniquilan sin pausa, materia que nunca está quieta, un cosmos que se sostiene destruyéndose.</p>
+      <p class="cuerpo en" lang="en">That is why a statue of him stands outside CERN: physicists recognized in «his dance» what they see inside particle accelerators… infinitesimal points appearing and annihilating without pause, matter that is never still, a cosmos that sustains itself by destroying itself.</p>
+      <p class="cuerpo">En esta cosmología, el «fin del mundo» es una simplificación del <em>pralaya</em>: la disolución cíclica, la exhalación de Brahman (la divinidad absoluta) antes de la siguiente «inhalación», la próxima iteración del baile eterno y perfecto.</p>
+      <p class="cuerpo en" lang="en">In this cosmology, the «end of the world» is an oversimplification of <em>pralaya</em>: the cyclical dissolution, the exhalation of Brahman (the absolute divinity) before the next «inhalation» — the next iteration of the eternal, perfect dance.</p>
+    </div>
+    <figure>
+      <img src="img/nataraja-cern.jpg" alt="Estatua de bronce de Shiva Nataraja de dos metros, instalada en los jardines del CERN en Ginebra, Suiza." loading="lazy">
+      <figcaption>shiva nataraja en el cern · bronce, 2 m · ginebra, suiza<br>donado por el gobierno de india, 2004 · gifted by the government of india<br>tambor: creación · llama: disolución · pie alzado: liberación<br><span class="en" lang="en">drum: creation · flame: dissolution · raised foot: liberation</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============================================================
+     ACTO II · el flash — la página se invierte: el negro se hace
+     blanco, como el desierto de Alamogordo a las 5:29 a.m.
+     ============================================================ -->
+<section class="flash">
+  <p class="acto-num">acto ii — el flash · act ii — the flash</p>
+  <p class="mono">alamogordo, nuevo méxico · 16 de julio de 1945 · july 16, 1945</p>
+  <p class="hora">05:29:45</p>
+  <p class="mono">prueba trinity · primera detonación nuclear<br><span class="en" lang="en">trinity test · first nuclear detonation</span></p>
+  <blockquote>
+    «Ahora me he convertido en la Muerte, la destructora de mundos.»
+    <span class="en" lang="en">«Now I am become Death, the destroyer of worlds.»</span>
+    <span class="origen mono">j. robert oppenheimer, citando el bhagavad gita (11.32)</span>
+  </blockquote>
+  <p class="cuerpo" style="margin: 2.4rem auto 0;">El «apocalipsis» occidental — la prueba Trinity, las bombas atómicas de Hiroshima y Nagasaki — fue leído por su propio creador a través de un texto hindú. Occidente inventó el fin del mundo y necesitó Oriente para nombrarlo.</p>
+  <p class="cuerpo en" lang="en" style="margin: 1rem auto 0;">The Western «apocalypse» — the Trinity test, the atomic bombs of Hiroshima and Nagasaki — was read by its own creator through a Hindu text. The West invented the end of the world, and needed the East to name it.</p>
+  <figure>
+    <img src="img/trinity-16ms.jpg" alt="Bola de fuego de la prueba Trinity, 16 milisegundos después de la detonación. La imagen aparece invertida en negativo." loading="lazy">
+    <figcaption>bola de fuego, 16 milisegundos después · negativo<br>la llama de nataraja, fotografiada por primera vez<br><span class="en" lang="en">fireball, 16 milliseconds after · nataraja's flame, photographed for the first time</span></figcaption>
+  </figure>
+</section>
+
+<!-- ============================================================
+     ACTO III · atman — lo que el fuego no quema
+     ============================================================ -->
+<section class="atman">
+  <p class="acto-num">acto iii — lo que el fuego no quema · act iii — what fire cannot burn</p>
+  <p class="gita-deva" lang="sa">नैनं छिन्दन्ति शस्त्राणि नैनं दहति पावकः ।<br>न चैनं क्लेदयन्त्यापो न शोषयति मारुतः ॥</p>
+  <p class="gita-trad">«Las armas no lo cortan, el fuego no lo quema, el agua no lo moja, el viento no lo seca.»</p>
+  <p class="gita-trad-en" lang="en">«Weapons do not cut it, fire does not burn it, water does not wet it, wind does not dry it.»</p>
+  <p class="verso-ref mono">bhagavad gita · 2.23 · sobre el atman · on the atman</p>
+  <figure class="a-color">
+    <img src="img/llama.jpg" alt="Una llama naranja ardiendo sobre fondo oscuro: el único elemento a color de toda la pieza." loading="lazy">
+    <figcaption style="text-align: center;">el único color de toda la pieza · the only color in the whole piece<br>el fuego que revela, no el que destruye · the fire that reveals, not the one that destroys</figcaption>
+  </figure>
+  <p class="cuerpo" style="margin: 3rem auto 0; text-align: center;">Si el ser ya está completo — si hay algo en nosotros que no nace ni se destruye, ni siquiera por una bomba — entonces ¿qué «destruye» realmente un apocalipsis? Solo formas. Solo cuerpos, ciudades, estructuras. El «velo» que nos impide ver lo que es verdaderamente importante: lo que no puede ser comprendido con la mente, sino que solo se puede sentir con el corazón abierto.</p>
+  <p class="cuerpo en" lang="en" style="margin: 1rem auto 0; text-align: center;">If the self is already complete — if there is something in us that is never born and never destroyed, not even by a bomb — then what does an apocalypse actually «destroy»? Only forms. Only bodies, cities, structures. The «veil» that keeps us from seeing what truly matters: that which cannot be understood with the mind, but only felt with an open heart.</p>
+  <p class="cuerpo" style="margin: 1.5rem auto 0; text-align: center;">Apocalipsis, en griego, nunca significó destrucción. Significó <em>revelación</em>.</p>
+  <p class="cuerpo en" lang="en" style="margin: 1rem auto 0; text-align: center;">Apocalypse, in Greek, never meant destruction. It meant <em>revelation</em>.</p>
+</section>
+
+<!-- ============================================================
+     ACTO IV · entropía — la flecha y la rueda
+     ============================================================ -->
+<section class="entropia">
+  <div class="acto-grid">
+    <div>
+      <p class="acto-num">acto iv — la flecha y la rueda · act iv — the arrow and the wheel</p>
+      <h2>todo tiende al desorden. y sin embargo.<span class="en" lang="en">everything tends toward disorder. and yet.</span></h2>
+      <p class="cuerpo">La segunda ley de la termodinámica dicta que la entropía solo aumenta; no obstante, el universo se enfría, las estrellas se apagan, todo se disuelve… Es «la flecha del tiempo», el apocalipsis lento que la física sí permite.</p>
+      <p class="cuerpo en" lang="en">The second law of thermodynamics dictates that entropy only increases; the universe cools, the stars go out, everything dissolves… It is «the arrow of time»: the slow apocalypse that physics does allow.</p>
+      <p class="cuerpo">La física dibuja el tiempo como una flecha recta: todo se desordena, nada regresa. El hinduismo dibuja ese mismo tiempo como una rueda: la disolución no es donde el dibujo termina, sino donde vuelve a empezar.</p>
+      <p class="cuerpo en" lang="en">Physics draws time as a straight arrow: everything falls into disorder, nothing returns. Hinduism draws that same time as a wheel: dissolution is not where the drawing ends, but where it begins again.</p>
+      <p class="cuerpo">Esta canción habla de eso mismo en otro lenguaje: de ver cómo las cosas se deshacen — y encontrar algo parecido a la paz en esa certeza.</p>
+      <p class="cuerpo en" lang="en">This song speaks of the same thing in another language: watching things come undone — and finding something like peace in that certainty.</p>
+    </div>
+    <div>
+      <div class="spotify-marco">
+        <iframe src="https://open.spotify.com/embed/track/795p3jKj5stjPf8IFpZkdD?theme=0" title="ENTROPY — Daniel Caesar, en Spotify" loading="lazy" allow="encrypted-media"></iframe>
+      </div>
+      <p class="mono" style="margin-top: 1rem; line-height: 2;">daniel caesar · entropy · 2019<br>banda sonora de esta pieza<br><a href="https://genius.com/Daniel-caesar-entropy-lyrics" target="_blank" rel="noopener">leer la letra en genius ↗</a></p>
+      <!-- ============================================================
+           EMBED OFICIAL DE GENIUS (opcional):
+           1. abre https://genius.com/Daniel-caesar-entropy-lyrics
+           2. baja al final de la letra y haz clic en "Embed"
+           3. copia el snippet que te da (un <div> + un <script>)
+           4. pégalo justo debajo de este comentario
+           el snippet trae el song-id que solo genius conoce.
+           ============================================================ -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PRALAYA · la página se disuelve y regresa al inicio.
+     el sitio mismo es la rueda.
+     ============================================================ -->
+<section class="pralaya">
+  <p class="acto-num">pralaya — la exhalación · the exhalation</p>
+  <h2>¿vamos hacia el paraíso o hacia el infierno?<span class="en" lang="en">are we heading toward paradise, or toward hell?</span></h2>
+  <p class="cuerpo" style="text-align: center;">La pregunta presupone una línea recta con un «final». Pero si el tiempo es una rueda, el infierno es una estación, no un destino… y el paraíso también. La esencia no tiene inicio ni fin: nunca surgió, nunca desaparecerá. No se alcanza, se reconoce.</p>
+  <p class="cuerpo en" lang="en" style="text-align: center; margin-top: -0.4rem;">The question presupposes a straight line with an «ending». But if time is a wheel, hell is a station, not a destination… and so is paradise. The essence has no beginning and no end: it never arose, it will never disappear. It is not reached — it is recognized.</p>
+  <button id="disolver">disolver este mundo · dissolve this world</button>
+  <p class="mono" style="margin-top: 1.4rem;">(y dejar que comience de nuevo · and let it begin again)</p>
+</section>
+
+<div id="velo" aria-hidden="true"></div>
+
+<footer>
+  <p class="mono">
+    TĀṆḌAVA · pieza visual para filosofía · a visual piece for philosophy · 2026<br>
+    <strong style="color: var(--hueso);">biniza vázquez | A01737294</strong><br>
+    imágenes: prueba trinity (dominio público, gobierno de EE. UU.) · nataraja en el cern (publicdelivery.org) · llama (pinterest)<br>
+    música: «entropy», daniel caesar, vía spotify · código: hecho a mano
+  </p>
+</footer>
+
+<script>
+/* ==============================================================
+   EL ANILLO — partículas que nacen y se aniquilan sobre un círculo,
+   como pares partícula-antipartícula, como el prabhamandala.
+   ============================================================== */
+(function () {
+  const canvas = document.getElementById('anillo');
+  const ctx = canvas.getContext('2d');
+  const reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let W, H, cx, cy, R;
+  const particulas = [];
+  const N = 240; // población del anillo
+
+  function redimensionar() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx = W / 2; cy = H / 2;
+    R = Math.min(W, H) * 0.36;
+  }
+
+  function nacer(p) {
+    // cada partícula nace en un punto del anillo, vive y se aniquila
+    p.angulo = Math.random() * Math.PI * 2;
+    p.radio = R + (Math.random() - 0.5) * R * 0.16;
+    p.vida = 0;
+    p.duracion = 180 + Math.random() * 320;      // frames de existencia
+    p.deriva = (Math.random() - 0.5) * 0.0035;   // rotación propia
+    p.tam = 0.5 + Math.random() * 1.4;
+  }
+
+  for (let i = 0; i < N; i++) {
+    const p = {};
+    nacer(p);
+    p.vida = Math.random() * p.duracion; // que no nazcan todas a la vez
+    particulas.push(p);
+  }
+
+  function dibujar() {
+    ctx.clearRect(0, 0, W, H);
+    for (const p of particulas) {
+      p.vida++;
+      p.angulo += 0.0008 + p.deriva; // la rueda gira, lentísima
+      if (p.vida > p.duracion) nacer(p); // aniquilación → creación
+
+      // opacidad: fade in al nacer, fade out al morir
+      const t = p.vida / p.duracion;
+      const alfa = Math.sin(t * Math.PI) * 0.85;
+
+      const x = cx + Math.cos(p.angulo) * p.radio;
+      const y = cy + Math.sin(p.angulo) * p.radio;
+
+      ctx.beginPath();
+      ctx.arc(x, y, p.tam, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(233, 229, 220, ' + alfa.toFixed(3) + ')';
+      ctx.fill();
+    }
+    requestAnimationFrame(dibujar);
+  }
+
+  function dibujarEstatico() {
+    // versión sin movimiento: el anillo, quieto
+    ctx.clearRect(0, 0, W, H);
+    for (const p of particulas) {
+      const x = cx + Math.cos(p.angulo) * p.radio;
+      const y = cy + Math.sin(p.angulo) * p.radio;
+      ctx.beginPath();
+      ctx.arc(x, y, p.tam, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(233, 229, 220, 0.6)';
+      ctx.fill();
+    }
+  }
+
+  window.addEventListener('resize', () => {
+    redimensionar();
+    if (reducirMovimiento) dibujarEstatico();
+  });
+
+  redimensionar();
+  if (reducirMovimiento) { dibujarEstatico(); } else { dibujar(); }
+})();
+
+/* ==============================================================
+   PRALAYA — disolver el mundo y dejar que recomience.
+   ============================================================== */
+(function () {
+  const boton = document.getElementById('disolver');
+  const velo = document.getElementById('velo');
+  const reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  boton.addEventListener('click', () => {
+    if (reducirMovimiento) {
+      window.scrollTo(0, 0);
+      return;
+    }
+    velo.classList.add('activo');           // todo se vuelve luz
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      velo.classList.remove('activo');      // y el mundo vuelve a respirar
+    }, 2300);
+  });
+})();
+</script>
+</body>
+</html>
