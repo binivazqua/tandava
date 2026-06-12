@@ -4,3 +4,6 @@
 
 URL: https://binivazqua.github.io/tandava/
 
+## Final reflection over there ⬆️
+
+Inside `tandava-reflection.md`
